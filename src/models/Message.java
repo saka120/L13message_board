@@ -21,6 +21,7 @@ import javax.persistence.Table;
 })
 
 @Table(name = "messages")
+
 public class Message {
     @Id
     @Column(name = "id")
