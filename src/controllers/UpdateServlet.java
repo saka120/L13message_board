@@ -2,8 +2,10 @@ package controllers;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.List ;
 
 import javax.persistence.EntityManager;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.Message;
+import models.validators.MessageValidator;
 import utils.DBUtil;
+
 
 /**
  * Servlet implementation class UpdateServlet
@@ -47,11 +51,44 @@ public class UpdateServlet extends HttpServlet {
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
             m.setUpdated_at(currentTime);
 
+
+            List<String> errors = MessageValidator.validate(m);
+            if(errors.size() > 0) {
+                em.close();
+
+                request.setAttribute("_token", request.getSession().getId());
+                request.setAttribute("message", m);
+                request.setAttribute("errors", errors);
+
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/messages/new.jsp");
+                rd.forward(request, response);
+            } else {
+
+
+                em.getTransaction().begin();
+                em.getTransaction().commit();
+                request.getSession().setAttribute("flush", "更新が完了しました。");
+
+
+
+                /*
+                em.getTransaction().begin();
+                em.persist(m);
+                em.getTransaction().commit();
+                request.getSession().setAttribute("flush", "登録が完了しました。");
+                */
+
+
+
+            /*
+
+
             em.getTransaction().begin();
             em.getTransaction().commit();
 
             request.getSession().setAttribute("flush", "更新が完了しました。");
 
+           */
 
             em.close();
 
@@ -59,6 +96,7 @@ public class UpdateServlet extends HttpServlet {
 
             response.sendRedirect(request.getContextPath() + "/index");
         }
+    }
     }
 
 }

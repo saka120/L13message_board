@@ -71,8 +71,19 @@ public class IndexServlet extends HttpServlet {
         em.close();
 
         request.setAttribute("messages", messages);
+
+
+
         request.setAttribute("messages_count", messages_count);
         request.setAttribute("page", page);
+
+
+      //  request.setAttribute("messages", messages);
+
+        if(request.getSession().getAttribute("flush") != null) {
+            request.setAttribute("flush", request.getSession().getAttribute("flush"));
+            request.getSession().removeAttribute("flush");
+        }
 
 
 
@@ -107,6 +118,8 @@ public class IndexServlet extends HttpServlet {
         em.close();
 
          }
+
+
        */
 
    }
