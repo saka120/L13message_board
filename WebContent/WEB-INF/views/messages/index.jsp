@@ -40,9 +40,6 @@
         </c:choose>
     </c:forEach>
 </div>
-<p><a href="${pageContext.request.contextPath}/new">新規メッセージの投稿</a></p>
-
-
 
 
 
