@@ -7,7 +7,6 @@ import models.Message;
 
 
 
-
 public class MessageValidator {
 
 

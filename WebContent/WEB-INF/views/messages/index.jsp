@@ -12,6 +12,7 @@
 
 
 
+
         <h2>メッセージ一覧</h2>
         <ul>
             <c:forEach var="message" items="${messages}">
@@ -23,8 +24,6 @@
                 </li>
             </c:forEach>
         </ul>
-
-
 
 
 <div id="pagination">
@@ -40,6 +39,8 @@
         </c:choose>
     </c:forEach>
 </div>
+
+
 
 
 
